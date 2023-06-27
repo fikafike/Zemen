@@ -1,0 +1,6 @@
+body {
+    margin-top: 10vh; /* Set margin-top to 50% of the viewport height */
+  }
+.hello{
+    border-radius: 30px red solid;
+}
