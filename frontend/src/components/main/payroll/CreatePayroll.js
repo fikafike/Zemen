@@ -4,16 +4,17 @@ import Button from "react-bootstrap/Button"
 import Swal from 'sweetalert2';
 function CreatePayroll() {
   const [isShow, setIsShow] = React.useState(false)
-  const employeeNameRefereneces=React.useRef()
-  const employeeSalary=React.useRef()
-  const overtime=React.useRef()
+  const employeeName=React.useRef()
+  const employeeAge=React.useRef()
+  const employeeBasicSalary=React.useRef()
   const workingDays=React.useRef()
+  const overtime=React.useRef()
   const bonus =React.useRef()
   const houseAllowance=React.useRef()
-  const predTime=React.useRef()
+  const prediem=React.useRef()
+  const transportAllowancePrediem=React.useRef()
   const transportAllowance=React.useRef()
   const telephoneAllowance=React.useRef()
-  const grossSalary=React.useRef()
   const social=React.useRef()
   const loan=React.useRef()
   const bank_account=React.useRef()
@@ -32,16 +33,17 @@ function CreatePayroll() {
     e.preventDefault();
 
     const inputs = [
-    employeeNameRefereneces.current,
-    employeeSalary.current,
+    employeeName.current,
+    employeeAge.current,
+    employeeBasicSalary.current,
     workingDays.current,
     overtime.current,
     bonus.current,
     houseAllowance.current,
-    predTime.current,
+    prediem.current,
+    transportAllowancePrediem.current,
     transportAllowance.current,
     telephoneAllowance.current,
-    grossSalary.current,
     costSharing.current,
     social.current,
     loan.current,
@@ -69,18 +71,21 @@ function CreatePayroll() {
   }
     // alert(e.)
     const new_employee={
-      "employee_name": employeeNameRefereneces.current.value,
-      "basic_salary": employeeSalary.current.value,
+      "employee_name": employeeName.current.value,
+      "age":employeeAge.current.value,
+      "basic_salary": employeeBasicSalary.current.value,
       "working_days": workingDays.current.value,
       "overtime": overtime.current.value,
       "bonus": bonus.current.value,
-      "house_allow": houseAllowance.current.value,
-      "predtime": predTime.current.value,
+      "house_allowance": houseAllowance.current.value,
+      "prediem": prediem.current.value,
+      "transport_allowance_prediem":transportAllowancePrediem.current.value,
       "transport_allowance": transportAllowance.current.value,
       "telephone_allowance": telephoneAllowance.current.value,
-      "gross_salary": grossSalary.current.value,
+      "gross_salary": 0,
       "taxable_income": 0,
-      "tax": 0,
+      "tax_by_number": 0,
+      "tax_by_percent":0,
       "pensions": 0,
       "cost_sharing": costSharing.current.value,
       "social": social.current.value,
@@ -103,7 +108,7 @@ function CreatePayroll() {
        .then((res) => res.json())
        .then((employee) => {
           console.log(employee)
-             })
+             }) 
        .catch((err) => {
           console.log(err.message);
        });
@@ -123,15 +128,20 @@ function CreatePayroll() {
         </Modal.Header>
         <Modal.Body>
         <form onSubmit={submitData}>
-            <div className="form-group">
+        <div className="form-group">
               <label  htmlFor="exampleInputEmail1">Employee name</label>
-              <input ref={employeeNameRefereneces} type='text'   className="form-control" id="employeeName" aria-describedby="employeeName" placeholder="Enter employee name"/>
+              <input ref={employeeName} type='text'   className="form-control" id="employeeName" aria-describedby="employeeName" placeholder="Enter employee name"/>
+            </div>
+
+            <div className="form-group">
+              <label  htmlFor="exampleInputEmail1">Employee age</label>
+              <input ref={employeeAge} type='text'   className="form-control" id="employeeName" aria-describedby="employeeName" placeholder="Enter employee name"/>
             </div>
 
             
             <div className="form-group">
               <label  htmlFor="exampleInputEmail1">Salary</label>
-              <input ref={employeeSalary}   className="form-control" id="employee" aria-describedby="employeeSalary"  type="number" placeholder="Enter employee salary"/>
+              <input ref={employeeBasicSalary}   className="form-control" id="employee" aria-describedby="employeeSalary"  type="number" placeholder="Enter employee salary"/>
             </div>
 
             <div className="form-group">
@@ -163,8 +173,14 @@ function CreatePayroll() {
       
       
             <div className="form-group">
-              <label  htmlFor="exampleInputEmail1">Pred time</label>
-              <input ref={predTime}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter pred time"/>
+              <label  htmlFor="exampleInputEmail1">Prediem</label>
+              <input ref={prediem}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter pred time"/>
+            </div>
+
+
+            <div className="form-group">
+              <label  htmlFor="exampleInputEmail1">Transport Allowance መዘዋወሪያ</label>
+              <input ref={transportAllowancePrediem}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter pred time"/>
             </div>
 
       
@@ -177,11 +193,6 @@ function CreatePayroll() {
               <input ref={telephoneAllowance}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter telephone Allowance "/>
             </div>
 
-            <div className="form-group">
-              <label  htmlFor="exampleInputEmail1">Gross Salary</label>
-              <input ref={grossSalary}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter gross salary"/>
-            </div>
-            
             <div className="form-group">
               <label  htmlFor="exampleInputEmail1">Social</label>
               <input ref={social}   className="form-control" id="overtime" aria-describedby="overtime"  type="number" placeholder="Enter social"/>
