@@ -24,36 +24,55 @@ class Payroll(APIView):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         except :
             return Response({"status":"could not found payroll"},status=status.HTTP_404_NOT_FOUND)
-    def put(self,request,pk,format='json'):
-        if request.data.get("total_deduction") is None:
-            return Response({"total_deduction":"is required"},status=status.HTTP_400_BAD_REQUEST)
-        if request.data.get("net_pay") is None:
-            return Response({"net_pay":"is required"},status=status.HTTP_400_BAD_REQUEST)
-        payroll_update= PayrollModel.objects.filter(pk=pk)
-        payroll_update.update(
-                    employee_name=request.data.get("employee_name"),
-                    basic_salary=request.data.get("basic_salary"),
-                    working_days=request.data.get("working_days"),
-                    overtime=request.data.get("overtime"),
-                    bonus=request.data.get("bonus"),
-                    house_allow=request.data.get("house_allow"),
-                    predtime=request.data.get("predtime"),
-                    transport_allowance=request.data.get("transport_allowance"),
-                    telephone_allowance=request.data.get("telephone_allowance"),
-                    gross_salary=request.data.get("gross_salary"),
-                    taxable_income=request.data.get("taxable_income"),
-                    tax_by_percent=request.data.get("tax_by_percent"),
-                    tax_by_number=request.data.get("tax_by_number"),
-                    pensions=request.data.get("pensions"),
-                    cost_sharing=request.data.get("cost_sharing"),
-                    social=request.data.get("social"),
-                    loan=request.data.get("loan"),
-                    penality=request.data.get("penality"),
-                    total_deduction=request.data.get("total_deduction"),
-                    net_pay=request.data.get("net_pay"),
-                )
-        updated_data=PayrollSerializer(payroll_update,many=True)
-        return Response(updated_data.data[0],status=status.HTTP_205_RESET_CONTENT)
+    def get_object(self, pk):
+        try:
+            return PayrollModel.objects.get(pk=pk)
+        except PayrollModel.DoesNotExist:
+            raise Http404
+
+    def put(self, request, pk, format=None):
+        payroll = self.get_object(pk)
+        required_fields = ['employee_name', 'age', 'basic_salary', 'working_days', 'overtime', 'bonus', 'house_allowance', 'prediem', 'transport_allowance', 'transport_allowance_prediem', 'telephone_allowance','social','loan','penality']
+        missing_fields = []
+
+        for field in required_fields:
+            if field not in request.data:
+                missing_fields.append(field)
+
+        if missing_fields:
+            # Some required fields are missing in request.data, return a response indicating which fields are missing
+            message = "Please provide the following required fields: {}".format(', '.join(missing_fields))
+            return Response({"message": message}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create a new dictionary that includes only the required fields from request.data
+        data = {field: request.data[field] for field in required_fields}
+        payroll.employee_name = data['employee_name']
+        payroll.age = data['age']
+        payroll.basic_salary = data['basic_salary']
+        payroll.working_days = data['working_days']
+        payroll.overtime = data['overtime']
+        payroll.bonus = data['bonus']
+        payroll.house_allowance = data['house_allowance']
+        payroll.prediem = data['prediem']
+        payroll.transport_allowance = data['transport_allowance']
+        payroll.transport_allowance_prediem = data['transport_allowance_prediem']
+        payroll.telephone_allowance = data['telephone_allowance']
+        payroll.social=data["social"]
+        payroll.penality=data['penality']
+        payroll.loan=data['loan']
+
+        # Save the updated payroll instance
+        payroll.save()
+
+        serializer = PayrollSerializer(payroll)
+        return Response(serializer.data)
+
+
+
+        
+
+# All required fields exist in request.data, continue with the regular flow of the code
+
     def delete(self,request,pk,data=None):
         try:
             payroll= PayrollModel.objects.get(pk=pk).delete()
@@ -61,104 +80,6 @@ class Payroll(APIView):
         except:
             return Response({"status":"could not delete the data"},status=status.HTTP_400_BAD_REQUEST)
 
-        
-       
-
-class CalculatePayrollView(APIView):
-    
-
-    def post(self,request,pk,format=None):
-        try:
-            payroll= PayrollModel.objects.get(pk=pk)
-            serializer=PayrollSerializer(payroll)
-        except :
-            return Response({"status":"could not found payroll"},status=status.HTTP_404_NOT_FOUND)
-        payroll_raw=PayrollModel.objects.get(pk=pk)
-        payroll_serialized=PayrollSerializer(payroll_raw)
-       
-        basic_salary=payroll_serialized.data["basic_salary"]
-        overtime=payroll_serialized.data["overtime"]
-        bonus=payroll_serialized.data["bonus"]
-        house_allow=payroll_serialized.data["house_allow"]
-        transport_allowance=payroll_serialized.data["transport_allowance"]
-        telephone_allowance=payroll_serialized.data["telephone_allowance"]
-        gross_salary=payroll_serialized.data["gross_salary"]
-        taxable_income=payroll_serialized.data["taxable_income"]
-        tax_by_percent=payroll_serialized.data["tax_by_percent"]
-        tax_by_number=payroll_serialized.data["tax_by_number"]
-        pensions=payroll_serialized.data["pensions"]
-        cost_sharing=payroll_serialized.data["cost_sharing"]
-        social=payroll_serialized.data["social"]
-        loan=payroll_serialized.data["loan"]
-        penality=payroll_serialized.data["penality"]
-        total_deduction=payroll_serialized.data["total_deduction"]
-        pred_time=payroll_serialized.data["predtime"]
-        
-        
-
-
-        net_pay=payroll_serialized.data["net_pay"]
-        
-        taxable_income=basic_salary+overtime+bonus+house_allow+pred_time+transport_allowance+telephone_allowance
-        gross_salary=int(bonus)+int( house_allow)+int(transport_allowance)+int(telephone_allowance)+int(basic_salary)
-        tax_by_percent=0
-        tax_minus=0
-        if(basic_salary>=601 and basic_salary<=1650):
-            tax_by_percent=10/100
-            tax_minus=60
-        if(basic_salary>=1651 and basic_salary<=3200):
-            tax_by_percent=15/100
-            tax_minus=142.5
-        if(basic_salary>=3201 and basic_salary<=5250):
-            tax_by_percent=20/100
-            tax_minus=302.50
-
-        if(basic_salary>=5251 and basic_salary<=7800):
-            tax_by_percent=25/100
-            tax_minus=565
-        if(basic_salary>=7801 and basic_salary<=10900):
-            tax_by_percent=30/100
-            tax_minus=955
-        if(basic_salary>=10901 ):
-            tax_by_percent=35/100
-            tax_minus=1500
-        pensions=0.07*basic_salary
-        pensions=round(pensions,2)
-        tax_by_number=taxable_income*tax_by_percent
-        total_deduction=pensions+cost_sharing+social+loan+penality-tax_minus
-        total_deduction=round(total_deduction,5)
-
-
-        net_pay=gross_salary-total_deduction
-        # return Response(net_pay)
-        try:
-            payroll=PayrollModel.objects.filter(pk=pk)
-            payroll.update(
-                    basic_salary=basic_salary,
-                    overtime=overtime,
-                    bonus=bonus,
-                    house_allow=house_allow,
-                    transport_allowance=transport_allowance,
-                    telephone_allowance=telephone_allowance,
-                    gross_salary=gross_salary,
-                    taxable_income=taxable_income,
-                    tax_by_percent=tax_by_percent,
-                    tax_by_number=tax_by_number,
-                    pensions=pensions,
-                    cost_sharing=cost_sharing,
-                    social=social,
-                    loan=loan,
-                    penality=penality,
-                    total_deduction=total_deduction,
-                    net_pay=net_pay,
-            )
-            payroll_serialized=PayrollSerializer(payroll,many=True)
-            return Response(payroll_serialized.data[0])
-        except:
-            return Response({"error"})
-
-        
-        
 
 
 
@@ -166,6 +87,90 @@ class CreatePayrollView(APIView):
     def post(self,request,format='json'):
         serializers=PayrollSerializer(data=request.data)
         if serializers.is_valid():
-            serializers.save()
-            return Response(serializers.data,status=status.HTTP_201_CREATED)
+            calculated_payroll=calcluatevalues(data=serializers.data)
+            if(calculated_payroll.status_code==400):
+                return calculated_payroll
+            serializer_calculated=PayrollSerializer(data=calculated_payroll.data)
+            if serializer_calculated.is_valid():
+                serializer_calculated.save()
+                return Response(serializer_calculated.data,status=status.HTTP_201_CREATED)
+            return Response(serializer_calculated.errors,status.HTTP_400_BAD_REQUEST)
         return Response(serializers.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+def calcluatevalues(data):
+    # SET CALCULATED VALUES TO 0 to avoid errors
+    data["taxable_income"]=0
+    data["tax_by_number"]=0
+    data["tax_by_percent"]=0
+    data["gross_salary"]=0
+    data["pensions"]=0
+    data["total_deduction"]=0
+    data["cost_sharing"]=0
+    data["total_deduction"]=0
+    data["net_pay"]=0
+    
+
+    # Age related
+    if data["age"] < 18:
+        return Response({"message": "Employee age could not be less than 18"}, status=400)
+
+    if data["age"] >= 60:
+        data["pensions"] = 0
+    data["pensions"] = round(data["basic_salary"] * 0.07,2)
+    
+
+
+    if data["transport_allowance"] > 600:
+        data["taxable_income"] += data["transport_allowance"]
+        transport_allowance_taxed=data["transport_allowance"]-600
+
+        data["taxable_income"] = round(transport_allowance_taxed, 2)
+    
+    # Transport allowance predime
+
+    if(data["transport_allowance_prediem"]>=2200):
+        return Response({"message":"Employees could not get transport allowance prediem above 2220"},status=400)
+    
+    
+    # Tranport allowance predime value can not be more than 25 percent of the salary of the user
+    transport_allowance_predime_roof = data["basic_salary"] * 0.25
+
+    if data["transport_allowance"] > transport_allowance_predime_roof:
+        return Response({"message": "Transport allowance could not be greater than 25 percent of the salary"}, status=400)
+    
+    data["taxable_income"]+=data["bonus"]+data["house_allowance"]+data["overtime"]+data["basic_salary"]
+
+    if(data["taxable_income"]>=601 and data["taxable_income"]<=1650):
+        data["tax_by_percent"]=0.1
+        data["tax_by_number"]=(data["taxable_income"]*0.1)-60
+    if(data["taxable_income"]>=1651 and data["taxable_income"]<=3200):
+        data["tax_by_percent"]=0.15
+        data["tax_by_number"]=(data["taxable_income"]*0.15)-142.5
+    if(data["taxable_income"]>=3201 and data["taxable_income"]<=5250):
+        data["tax_by_percent"]=0.2
+        data["tax_by_number"]=(data["taxable_income"]*0.2)-302.5
+    if(data["taxable_income"]>=5251 and data["taxable_income"]<=7800):
+        data["tax_by_percent"]=0.25
+        data["tax_by_number"]=(data["taxable_income"]*0.25)-565
+    if(data["taxable_income"]>=7801 and data["taxable_income"]<=10900):
+        data["tax_by_percent"]=0.3
+        data["tax_by_number"]=(data["taxable_income"]*0.3)-955
+    if(data["taxable_income"]>=10901 ):
+        data["tax_by_percent"]=0.35
+        data["tax_by_number"]=(data["taxable_income"]*0.35)-1500
+    data["gross_salary"]=data["bonus"]+data["house_allowance"]+data["overtime"]+data["basic_salary"]+data["transport_allowance_prediem"]+data["transport_allowance"]+data["prediem"]+data["telephone_allowance"]
+    data["total_deduction"]=data["tax_by_number"]+data["pensions"]+data["social"]+data["loan"]+data["penality"]+data["cost_sharing"]
+    data["total_deduction"]= round(data["total_deduction"],2)
+    data["net_pay"]=data["gross_salary"]-data["total_deduction"]
+
+
+    
+    return Response(data)
+
+
+
+   
+
+    
+

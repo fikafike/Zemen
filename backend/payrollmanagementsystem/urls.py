@@ -16,19 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from payroll.views import Payroll as PayrollView,Payrolls as PayrollViews,CreatePayrollView,CalculatePayrollView
+from payroll.views import Payroll as PayrollView,Payrolls as PayrollViews,CreatePayrollView
 from payroll.operations import ChangeToCsv,ChangeToCsvOnlyBank
-from letters.views import LetterView,LetterViewDetail
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path("api/payroll/",CreatePayrollView.as_view(),name="payroll"),
     path("api/payroll/<int:pk>/",PayrollView.as_view(),name="payroll"),
     path("api/payrolls/",PayrollViews.as_view(),name="payrolls"),
-    path("api/payroll/calculate/<int:pk>/",CalculatePayrollView.as_view(),name="calculate"),
     path("api/csv/",ChangeToCsv.as_view()),
-    path("api/csv/bank/",ChangeToCsvOnlyBank.as_view()),
-    path("api/letter/",LetterView.as_view()),
-    path("api/letter/<int:pk>/",LetterViewDetail.as_view()),
+    path("api/csv/bank/",ChangeToCsvOnlyBank.as_view())
     
 ]
