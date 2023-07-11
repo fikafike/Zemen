@@ -2,25 +2,15 @@ import React from "react";
 
 const ResignationLetter = () => {
   return (
-    <div  className="appreciation-letter ">
-      <p>Dear [Manager/Supervisor's Name],</p>
+    <div className="appreciation-letter ">
+      <p> ለ ሚ መ ለ ከ ተ ው ሁ ሉ</p>
       <p>
-        I am writing to inform you that I have decided to resign from my position as [Job Title] at [Company Name]. My last day of work will be [Last Day of Work], in accordance with the notice period required by my employment contract.
+      የዘመን ባስ ኢትዮጵያ ትራንስፖርት አገልግሎት ሰራተኛ የነበሩት አቶ ዋሲሁን ዋልቆ በድርጅታችን ውስጥ የሰጡት አገልግሎት ተጠቅሶ የስራ ልምድ ማስረጃ እንዲሰጣቸው ጠይቀውናል፡፡ በዚሁ መሰረት አቶ ዋሲሁን ዋለቆ በድርጅታችን ውስጥ ከመስከረም 02 ቀን 2013 ዓ/ም እስከ ግንቦት 18 /2015 ድረስ በጎሚስታ የስራ መደብ ላይ ያልተጣራ ብር 7,047.00/ሰባት ሺ አርባ ሰባት ብር/ የወር ደመወዝ እና 2,700.00 /ሁለት ሺ ሰባት መቶ ብር/ የትራንስፖርት አበል እየተከፈላቸው አገልግሎት የሰጡ ሲሆን ከግንቦት 19 ቀን 2015 ዓ/ም ጀምሮ ከስራ የተሰናበቱ መሆኑን እየገለጽን በአገልግሎት ጊዜያቸው ከሚከፈላቸው ደመወዝ ላይ ተገቢው የመንግስት ግብርና የጡረታ መዋጮ የተከፈለበት መሆኑን በማረጋገጥ ይህን የስራ ልምድ ማስረጃ የሰጠናቸው መሆኑን እንገልጻለን፡፡ ከሰላምታ ጋር
       </p>
-      <p>
-        Please accept my sincere thanks for the support and opportunities you have provided me during my time with the company. I have appreciated the chance to work with such a dedicated and talented team, and I will always value the experience and knowledge I have gained here.
-      </p>
-      <p>
-        I will do everything I can to ensure a smooth transition during my remaining time here. I am also happy to assist in any way I can to help find and train a suitable replacement for my position.
-      </p>
-      <p>
-        Thank you again for the opportunities and experiences I have had while working here. I wish you and the company continued success in the future.
-      </p>
-      <p>Sincerely,</p>
-      <p>[Your Name]</p>
-      <p>[Your Title]</p>
+     
     </div>
   );
 };
+
 
 export default ResignationLetter;

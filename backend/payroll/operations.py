@@ -8,15 +8,18 @@ class ChangeToCsv(APIView):
         response['Content-Disposition'] = 'attachment; filename="payroll.csv"'
 
         writer = csv.writer(response)
-        writer.writerow(['Employee Name', 'Basic Salary', 'Working Days', 'Overtime', 'Bonus',
-                        'House Allowance', 'Predtime', 'Transport Allowance', 'Telephone Allowance',
-                        'Gross Salary', 'Taxable Income', 'Tax', 'Pensions', 'Cost Sharing', 'Social',
-                        'Loan', 'Penality', 'Total Deduction', 'Net Pay', 'Bank Account'])
+        writer.writerow(['employee_name', 'basic_salary', 'working_days',
+                                                            'overtime', 'bonus', 'house_allowance', 'transport_allowance_prediem',
+                                                            'transport_allowance', 'telephone_allowance',
+                                                            'gross_salary', 'taxable_income', 'tax_by_number','tax_by_percent' ,'pensions',
+                                                            'cost_sharing', 'social', 'loan', 'penality',
+                                                            'total_deduction', 'net_pay', 'bank_account'])
+
 
         payroll_data = PayrollModel.objects.all().values_list('employee_name', 'basic_salary', 'working_days',
-                                                            'overtime', 'bonus', 'house_allow', 'predtime',
+                                                            'overtime', 'bonus', 'house_allowance', 'transport_allowance_prediem',
                                                             'transport_allowance', 'telephone_allowance',
-                                                            'gross_salary', 'taxable_income', 'tax', 'pensions',
+                                                            'gross_salary', 'taxable_income', 'tax_by_number','tax_by_percent' ,'pensions',
                                                             'cost_sharing', 'social', 'loan', 'penality',
                                                             'total_deduction', 'net_pay', 'bank_account')
 

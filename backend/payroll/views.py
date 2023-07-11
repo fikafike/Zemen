@@ -32,7 +32,7 @@ class Payroll(APIView):
 
     def put(self, request, pk, format=None):
         payroll = self.get_object(pk)
-        required_fields = ['employee_name', 'age', 'basic_salary', 'working_days', 'overtime', 'bonus', 'house_allowance', 'prediem', 'transport_allowance', 'transport_allowance_prediem', 'telephone_allowance','social','loan','penality']
+        required_fields = ['employee_name', 'age', 'basic_salary', 'working_days', 'overtime', 'bonus', 'house_allowance', 'prediem', 'transport_allowance', 'transport_allowance_prediem', 'telephone_allowance','social','loan','penality','bank_account']
         missing_fields = []
 
         for field in required_fields:
@@ -60,7 +60,7 @@ class Payroll(APIView):
         payroll.social=data["social"]
         payroll.penality=data['penality']
         payroll.loan=data['loan']
-
+        payroll.bank_account=data['bank_account']
         # Save the updated payroll instance
         payroll.save()
 
@@ -115,9 +115,9 @@ def calcluatevalues(data):
     if data["age"] < 18:
         return Response({"message": "Employee age could not be less than 18"}, status=400)
 
-    if data["age"] >= 60:
-        data["pensions"] = 0
-    data["pensions"] = round(data["basic_salary"] * 0.07,2)
+    if data["age"] < 60:
+        data["pensions"] = round(data["basic_salary"] * 0.07,2)
+
     
 
 

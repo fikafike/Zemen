@@ -2,6 +2,8 @@ import React from 'react'
 import Modal from "react-bootstrap/Modal"
 import Button from "react-bootstrap/Button"
 import Swal from 'sweetalert2';
+
+import swal from 'sweetalert2';
 function CreatePayroll() {
   const [isShow, setIsShow] = React.useState(false)
   const employeeName=React.useRef()
@@ -21,6 +23,11 @@ function CreatePayroll() {
   const costSharing=React.useRef()
   const penality=React.useRef()
 
+
+
+
+
+  
   const initModal = () => {
     return setIsShow(!false)
   }
@@ -99,26 +106,37 @@ function CreatePayroll() {
       
     }
     fetch(`http://127.0.0.1:8000/api/payroll/`, {
-       method: 'POST',
-       body: JSON.stringify(new_employee),
-       headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-       },
+      method: 'POST',
+      body: JSON.stringify(new_employee),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
-       .then((res) => res.json())
-       .then((employee) => {
-          console.log(employee)
-             }) 
-       .catch((err) => {
-          console.log(err.message);
-       });
+      .then((res) => res.json())
+      .then((employee) => {
+        if('employee_name' in employee){
+          window.location.reload(true)
+        }
+        else{
+          Swal.fire({
+            title: 'Error',
+            text: employee.message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
 
-    console.log(new_employee)
-    window.location.reload(false);
+        }
 
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    
   }
   return (
     <>
+   
       <Button style={{paddingLeft:7}} variant="primary" onClick={initModal}>
         Add User
       </Button>

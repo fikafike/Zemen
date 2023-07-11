@@ -5,7 +5,6 @@ import {
   Routes ,
   Route
 } from "react-router-dom";
-import Home from "./Home"
 import App from "./App"
 import EditPayroll from './components/main/payroll/EditPayroll';
 import BankPayroll from './components/main/payroll/BankPayroll';
