@@ -9,39 +9,6 @@ import PopUpWithYesNoField from "./PopUpWithYesNoField";
 
 function Payroll() {
 
-
-  const dataSource = [
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street',
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street',
-    },
-  ];
-  
-  const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-  ];
   const [pageNumber, setPageNumber] = useState(0);
   const employeesPerPage = 5;
   const pagesVisited = pageNumber * employeesPerPage;
@@ -62,7 +29,7 @@ function Payroll() {
   };
 
   const fetchUserData = () => {
-    fetch("http://127.0.0.1:8000/api/payrolls/")
+    fetch("http://157.245.240.123:8000/api/payrolls/")
       .then((response) => {
         return response.json();
       })
@@ -75,7 +42,7 @@ function Payroll() {
   };
 
   const handleCalculation = (id) => {
-    fetch(`http://127.0.0.1:8000/api/payroll/calculate/${id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/calculate/${id}/`, {
       method: "POST",
       body: JSON.stringify({}),
       headers: {
@@ -94,7 +61,7 @@ function Payroll() {
   };
 
   const deletePayroll = (employee) => {
-    fetch(`http://127.0.0.1:8000/api/payroll/${employee.id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/${employee.id}/`, {
       method: "DELETE",
       body: JSON.stringify({}),
       headers: {
@@ -113,7 +80,7 @@ function Payroll() {
   }, []);
 
   function downloadPayrollCSV() {
-    fetch("http://127.0.0.1:8000/api/csv/")
+    fetch("http://157.245.240.123:8000/api/csv/")
       .then((response) => {
         // Create a blob object from the CSV data
         return response.blob();
