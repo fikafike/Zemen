@@ -36,11 +36,22 @@ console.log(employee)
 
   return (
     <>
-      <Table striped bordered hover>
-        <thead>
+
+<div className="container card p-2 ">
+      
+      <div class="card-header">
+        <h3>Bank Account</h3>
+      </div>
+      <div className="card-body table-responsive">
+  
+      <table striped bordered hover
+      
+      className="table table-lg table-striped font"
+      >
+        <thead  className="table-dark ">
           <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th> Full Name</th>
             <th>Bank Account</th>
             <th>Amount to  Transfer</th>
           </tr>
@@ -62,9 +73,12 @@ console.log(employee)
             </td>
           </tr>
         </tbody>
-      </Table>
+      </table>
      
-   <Link to={`/`}>  <button className="btn btn-primary">Go back</button></Link>
+   <Link to={`/`}>  <button className="btn btn-primary btn-sm">Go back</button></Link>
+   </div>
+   </div>
+  
     </>
   );
 }

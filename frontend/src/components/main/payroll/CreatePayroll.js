@@ -137,7 +137,7 @@ function CreatePayroll() {
   return (
     <>
    
-      <Button style={{paddingLeft:7}} variant="primary" onClick={initModal}>
+      <Button style={{paddingLeft:7}} className='btn-sm btn-danger' variant="primary" onClick={initModal}>
         Add User
       </Button>
       <Modal show={isShow}>
@@ -237,7 +237,7 @@ function CreatePayroll() {
             </div>
 
             
-            <button type="submit" className="btn btn-dark">Store</button>
+            <button type="submit" className="btn btn-dark mt-4">Store</button>
       </form>
         </Modal.Body>
         <Modal.Footer>

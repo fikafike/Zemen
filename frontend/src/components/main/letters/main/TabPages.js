@@ -26,7 +26,8 @@ function TabbedInterface() {
 
   // Render the tabs and their content
   return (
-    <div>
+    <div className="container card p-2 ">
+      
       <div className="tab-buttons">
         {tabs.map((tab) => (
           <button

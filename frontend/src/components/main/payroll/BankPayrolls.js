@@ -105,22 +105,22 @@ function BankPayrolls(){
 
   return (
     < >
-    <div className='container'>
-        
-    <td><button className='btn btn-primary' onClick={downloadPayrollCSV}>Change to csv</button></td>
-    <Link to={`/`}> <button className="btn btn-dark" >Go Back</button></Link>
+
+   <div className="container card p-2 ">
+   <div class="card-header">
+    <Link to={`/`}> <button className="btn btn-dark  btn-sm" >Go Back</button></Link>
+        <button class="btn btn-primary btn-sm float-end" onClick={downloadPayrollCSV}>Change to csv</button>
+    </div>
       <table
         id="dtBasicExample"
         className='table table-bordered '
         
         width="100%" border="0" cellspacing="0" cellpadding="0"
       >
-        <thead>
-          
-          
+      <thead className="table-dark ">
           <tr>
           <th className="th-sm">ID</th>
-          <th className="th-sm">Name</th>
+          <th className="th-sm">Full Name</th>
           <th className="th-sm">Payrolls</th>
           <th className="th-sm">Bank Account</th>
             
@@ -133,15 +133,20 @@ function BankPayrolls(){
        
       </table>
       <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
+       breakLabel={'...'}
+       breakClassName={'item break-me '}
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        marginPagesDisplayed={2}
         pageCount={pageCount}
         onPageChange={changePage}
-        containerClassName={'pagination'}
-        previousLinkClassName={'page-link'}
-        nextLinkClassName={'page-link'}
-        disabledClassName={'disabled'}
-        activeClassName={'active'}
+        containerClassName={"pagination"}
+        previousLinkClassName={"page-link"}
+        nextLinkClassName={"page-link"}
+        disabledClassName={"disabled"}
+        activeClassName={'item active '}
+        pageRangeDisplayed={2}
+      
       />
     </div>
     </>

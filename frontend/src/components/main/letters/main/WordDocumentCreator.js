@@ -12,7 +12,7 @@ function WordDocumentCreator() {
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12}>
-        <Typography variant="h4">Download Word Document Templates</Typography>
+        <Typography variant="h4" class="text-center">Download Word Document Templates</Typography>
       </Grid>
       <Grid item>
         <Button variant="contained" color="primary" href={APL} download>

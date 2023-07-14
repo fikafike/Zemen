@@ -4,10 +4,44 @@ import "./payroll.css";
 import ReactPaginate from "react-paginate";
 import CreatePayroll from "./CreatePayroll";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import PopUpWithYesNoField from "./PopUpWithYesNoField";
 
 function Payroll() {
+
+
+  const dataSource = [
+    {
+      key: '1',
+      name: 'Mike',
+      age: 32,
+      address: '10 Downing Street',
+    },
+    {
+      key: '2',
+      name: 'John',
+      age: 42,
+      address: '10 Downing Street',
+    },
+  ];
+  
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'address',
+    },
+  ];
   const [pageNumber, setPageNumber] = useState(0);
   const employeesPerPage = 5;
   const pagesVisited = pageNumber * employeesPerPage;
@@ -110,6 +144,17 @@ function Payroll() {
     .map((employee) => {
       console.log(employee)
       return (
+
+        <>
+
+
+      <Table
+				dataSource={dataSource} columns={columns}
+			
+			/>
+
+
+        
         <tr key={employee.id}>
           <td>
             <div className="form-outline">{employee.id}</div>
@@ -215,24 +260,24 @@ function Payroll() {
               </Modal.Footer>
             </Modal>
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle variant="success" id="dropdown-basic" className="btn-sm">
                 Actions
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <Link to={`/edit/${employee.id}`}>
-                    <button className="btn btn-warning">Edit</button>
+                    <button className="btn btn-warning btn-sm">Edit</button>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <Link to={`/bank/${employee.id}`}>
-                    <button className="btn btn-primary">Bank</button>
+                    <button className="btn btn-primary btn-sm">Bank</button>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <button
-                    className="btn btn-dark"
+                    className="btn btn-dark btn-sm"
                     onClick={() => {
                       handleCalculation(employee.id);
                     }}
@@ -249,6 +294,8 @@ function Payroll() {
             </Dropdown>
           </td>
         </tr>
+
+        </>
       );
     });
 
@@ -258,71 +305,151 @@ function Payroll() {
     setPageNumber(selected);
   };
 
+  
+
   return (
     <>
-      <Link to={"/banks/"} className="btn btn-dark">
+
+    <div className="container card p-2 ">
+      
+    <div class="card-header">
+  
+    <Link to={"/banks/"} className="btn btn-success  btn-sm">
         Amount Transfer
       </Link>
-      <br />
+        <button type="button" class="btn btn-primary btn-sm float-end" onClick={downloadPayrollCSV}>  Download to excel</button>
+    </div>
 
-      <div className="btn btn-primary" onClick={downloadPayrollCSV}>
-        Download to excel
-      </div>
-      <div></div>
+    <div className="card-body table-responsive">
+  
 
       <table
-        className="table table-bordered hello"
-        border="0"
-        cellspacing="0"
-        cellpadding="0"
+        className="table table-lg table-striped font"
+    
+        
       >
-        <thead>
+        <thead className="table-dark ">
           <tr>
-            <th>ID</th>
-            <th>NAME</th>
-            <th>AGE</th>
-            <th>W.DAYS</th>
-            <th>B.SALARY</th>
-            <th>OT</th>
-            <th>BONUS</th>
-            <th>HOUSE ALLOW.</th>
-            <th>PREDIEM.</th>
-            <th>TRANSPORT ALLOWANCE</th>
-            <th>TRANSPORT ALLOWANCE መዘዋወሪያ</th>
-            <th>TELEPHONE ALLOWANCE</th>
-            <th>GROSS SALARY</th>
-            <th>TAXABLE INCOME</th>
-            <th>TAX BY PERCENT</th>
-            <th>TAXED VALUE</th>
-            <th>PENSIONS</th>
-            <th>COST SHARING</th>
-            <th>SOCIAL</th>
-            <th>LOAN</th>
-            <th>PENALITY</th>
-            <th>TOTAL DEDUCTION</th>
-            <th>NET PAY</th>
-            <th>ACTIONS</th>
+            <th scope="col">
+            Id
+            </th>
+            <th scope="col">
+           Full Name
+            </th>
+            <th scope="col">
+           Age
+            
+              </th>
+            <th scope="col">
+           W.Days
+            
+            </th>
+            <th scope="col">
+            B.Salary
+             </th>
+            <th scope="col">
+            OT
+              </th>
+            <th scope="col">
+            Bonus
+              </th>
+            <th scope="col">
+            H.Allowance
+              </th>
+            <th scope="col">
+            Prediem
+              </th>
+            <th scope="col">
+           T.Allowance
+             </th>
+            <th scope="col">
+            መዘዋወሪያ
+            </th>
+            <th scope="col">
+            Tel.Allowance
+            </th>
+            <th scope="col">
+             G.Salars
+             </th>
+            <th scope="col">
+           T.Income
+            </th>
+            <th scope="col">
+            T.Percent
+             </th>
+            <th scope="col">
+            T.Value
+             </th>
+            <th scope="col">
+             Pensions
+             </th>
+            <th scope="col">
+           C.Sharing
+            </th>
+            <th scope="col">
+           Social
+              </th>
+            <th scope="col">
+           Loan
+              </th>
+            <th scope="col">
+           Penality
+              </th>
+            <th scope="col">
+           T.Deduction
+              </th>
+            <th scope="col">
+            Net Pays
+             </th>
+            <th scope="col">
+            Actions
+              </th>
           </tr>
         </thead>
-        <div></div>
         <tbody>{displayEmployees}</tbody>
         <tfoot>
-          <tr>
-            <CreatePayroll />
-          </tr>
+        
         </tfoot>
       </table>
+     
+
+
+   
+      </div>
+      <div>
+
+      
+      <div className="card-footer d-flex justify-content-between">
+
+  
+            <div className=" justify-content-start">
+
+            <CreatePayroll />
+            </div>
+        
+      <div className=" justify-content-end"
+      >
+
       <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
+        breakLabel={'...'}
+        breakClassName={'item break-me '}
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        marginPagesDisplayed={2}
         pageCount={pageCount}
         onPageChange={changePage}
         containerClassName={"pagination"}
         previousLinkClassName={"page-link"}
         nextLinkClassName={"page-link"}
         disabledClassName={"disabled"}
-        activeClassName={"active"}
+        activeClassName={'item active'}
+        pageRangeDisplayed={2}
+      
       />
+      </div>
+      </div>
+</div>
+       </div>
     </>
   );
 }

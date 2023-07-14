@@ -4,9 +4,10 @@ import  Payroll from './components/main/payroll/payroll'
 
 function App() {
   return (
-    <div className="payroll">
+    <div className="container-sm mx-auto">
+   
     <Payroll/>
-    <Link to={"/letters/"}><button >Go to letters</button></Link>
+    <Link to={"/letters/"}><button className='btn btn-secondary btn-sm mt-3'  >Go to letters</button></Link>
     
     </div>
   );

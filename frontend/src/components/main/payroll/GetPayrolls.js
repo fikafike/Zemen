@@ -213,12 +213,12 @@ function GetPayroll(){
         id="dtBasicExample"
         
         width="100%" border="0" cellspacing="0" cellpadding="0"
+        
       >
-        <thead>
-          
-          
+
+        <thead>          
           <tr>
-            <th className="th-sm">Name</th>
+            <th className="th-sm">Full Name</th>
             <th className="th-sm">Salary</th>
             <th className="th-sm">Working Days</th>
             <th className="th-sm">Overtime</th>

@@ -22,7 +22,7 @@ function PopUpWithYesNoField({ employee, handleDelete }) {
 
   return (
     <>
-      <Button variant="danger" onClick={handleShow} style={{marginLeft:15}}>
+      <Button variant="danger" className="btn-sm" onClick={handleShow} style={{marginLeft:15}}>
         Delete
       </Button>
 
