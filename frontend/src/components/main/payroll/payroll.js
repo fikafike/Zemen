@@ -62,7 +62,7 @@ function Payroll() {
   };
 
   const fetchUserData = () => {
-    fetch("http://127.0.0.1:8000/api/payrolls/")
+    fetch("http://157.245.240.123:8000/api/payrolls/")
       .then((response) => {
         return response.json();
       })
@@ -75,7 +75,7 @@ function Payroll() {
   };
 
   const handleCalculation = (id) => {
-    fetch(`http://127.0.0.1:8000/api/payroll/calculate/${id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/calculate/${id}/`, {
       method: "POST",
       body: JSON.stringify({}),
       headers: {
@@ -94,7 +94,7 @@ function Payroll() {
   };
 
   const deletePayroll = (employee) => {
-    fetch(`http://127.0.0.1:8000/api/payroll/${employee.id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/${employee.id}/`, {
       method: "DELETE",
       body: JSON.stringify({}),
       headers: {
@@ -113,7 +113,7 @@ function Payroll() {
   }, []);
 
   function downloadPayrollCSV() {
-    fetch("http://127.0.0.1:8000/api/csv/")
+    fetch("http://157.245.240.123:8000/api/csv/")
       .then((response) => {
         // Create a blob object from the CSV data
         return response.blob();

@@ -30,7 +30,7 @@ function EditPayroll(){
   const [employee,setEmployees]=React.useState({});
   
   const fetchUserData = () => {
-    fetch(`http://127.0.0.1:8000/api/payroll/${id}`)
+    fetch(`http://157.245.240.123:8000/api/payroll/${id}`)
       .then(response => {
         return response.json()
       })
@@ -71,7 +71,7 @@ function EditPayroll(){
 
       console.log(new_employee);
       
-    fetch(`http://127.0.0.1:8000/api/payroll/${employee.id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/${employee.id}/`, {
       method: 'PUT',
       body: JSON.stringify(new_employee),
       headers: {

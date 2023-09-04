@@ -10,7 +10,7 @@ function BankPayrolls(){
   const pagesVisited = pageNumber * employeesPerPage;
   const [employees, setEmployees] = useState([])
   const fetchUserData = () => {
-    fetch("http://127.0.0.1:8000/api/payrolls/")
+    fetch("http://157.245.240.123:8000/api/payrolls/")
       .then(response => {
         return response.json()
       })
@@ -22,12 +22,13 @@ function BankPayrolls(){
   }
   
   
+  
   useEffect(() => {
     fetchUserData()
   }, [])
 
   function downloadPayrollCSV() {
-    fetch('http://127.0.0.1:8000/api/csv/bank/')
+    fetch('http://157.245.240.123:8000/api/csv/bank/')
       .then(response => {
         // Create a blob object from the CSV data
         return response.blob();

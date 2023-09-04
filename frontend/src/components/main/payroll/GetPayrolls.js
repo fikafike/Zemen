@@ -9,7 +9,7 @@ function GetPayroll(){
   const pagesVisited = pageNumber * employeesPerPage;
   const [employees, setEmployees] = useState([])
   const fetchUserData = () => {
-    fetch("http://127.0.0.1:8000/api/payrolls/")
+    fetch("http://157.245.240.123:8000/api/payrolls/")
       .then(response => {
         return response.json()
       })
@@ -21,7 +21,7 @@ function GetPayroll(){
   }
   
   const handleCalculation = (id) => {
-    fetch(`http://127.0.0.1:8000/api/payroll/calculate/${id}/`, {
+    fetch(`http://157.245.240.123:8000/api/payroll/calculate/${id}/`, {
        method: 'POST',
        body: JSON.stringify({
          
