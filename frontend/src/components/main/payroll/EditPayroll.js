@@ -64,7 +64,7 @@ function EditPayroll(){
         "social": social.current.value === '' ? employee.social : parseInt(social.current.value),
         "loan": loan.current.value === '' ? employee.loan : parseInt(loan.current.value),
         "penality": penality.current.value === '' ? employee.penality : parseInt(penality.current.value),
-        "bank_account": bankAccount.current.value===''?employee.bankAccount:parseInt(bankAccount.current.value),
+        "bank_account": bankAccount.current.value===''?employee.bank_account:parseInt(bankAccount.current.value),
         "total_deduction": employee.total_deduction,
         "net_pay": employee.net_pay
     };
@@ -114,8 +114,8 @@ console.log(employee)
     
   }, []);
     return <>
-    <div className="container rounded bg-white mt-5 mb-5">
-    <div className="mt-5 text-center">
+    <div className="container card rounded bg-white mt-5 mb-5">
+    <div className="mt-5 card-header">
     <Link to={`/`}> <button className="btn btn-dark" >Go Back</button></Link>
          
         </div>

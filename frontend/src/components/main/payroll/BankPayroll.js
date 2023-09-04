@@ -30,10 +30,6 @@ console.log(employee)
     
   }, []);
 
-
-
-
-
   return (
     <>
 
