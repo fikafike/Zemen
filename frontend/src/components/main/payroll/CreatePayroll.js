@@ -105,7 +105,7 @@ function CreatePayroll() {
 
       
     }
-    fetch(`http://157.245.240.123:8000/api/payroll/`, {
+    fetch(`http://127.0.0.1:8000/api/payroll/`, {
       method: 'POST',
       body: JSON.stringify(new_employee),
       headers: {

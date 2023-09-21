@@ -24,13 +24,13 @@ function EditPayroll(){
   const costSharing=React.useRef()
   const penality=React.useRef()
   const grossSalary=React.useRef();
-
+  const net_pay = React.useRef()
 
   const {id}=useParams();
   const [employee,setEmployees]=React.useState({});
   
   const fetchUserData = () => {
-    fetch(`http://157.245.240.123:8000/api/payroll/${id}`)
+    fetch(`http://127.0.0.1:8000/api/payroll/${id}`)
       .then(response => {
         return response.json()
       })
@@ -66,12 +66,12 @@ function EditPayroll(){
         "penality": penality.current.value === '' ? employee.penality : parseInt(penality.current.value),
         "bank_account": bankAccount.current.value===''?employee.bank_account:parseInt(bankAccount.current.value),
         "total_deduction": employee.total_deduction,
-        "net_pay": employee.net_pay
+      
     };
 
       console.log(new_employee);
       
-    fetch(`http://157.245.240.123:8000/api/payroll/${employee.id}/`, {
+    fetch(`http://127.0.0.1:8000/api/payroll/${employee.id}/`, {
       method: 'PUT',
       body: JSON.stringify(new_employee),
       headers: {
@@ -107,6 +107,8 @@ function EditPayroll(){
       
   
   }
+
+  
 
 console.log(employee)
   React.useEffect(() => {
@@ -232,6 +234,8 @@ console.log(employee)
             </div>
             
           </div>
+
+          
 
           <div className="mt-5 text-center">
             <button className="btn btn-primary profile-button" onClick={SubmitUser}>Save Profile</button>
