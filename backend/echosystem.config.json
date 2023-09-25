@@ -2,7 +2,7 @@
 "apps": [{
 "name": "payrollmanagementsystems",
 "script": "manage.py",
-"args": ["runserver", "157.245.240.123:8000"],
+"args": ["runserver", "192.168.8.101:8000"],
 "exec_mode": "fork",
 "instances": "1",
 "wait_ready": true,
